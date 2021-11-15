@@ -60,6 +60,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: primaryColor.withOpacity(0.1),
       appBar: AppBar(
         title: const Text(
           'Home',
