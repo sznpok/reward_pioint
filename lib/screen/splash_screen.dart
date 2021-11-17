@@ -23,7 +23,7 @@ class _SplashScreenState extends State<SplashScreen>
       duration: const Duration(seconds: 2),
       vsync: this,
     );
-    animation = CurvedAnimation(parent: controller, curve: Curves.decelerate);
+    animation = CurvedAnimation(parent: controller, curve: Curves.bounceOut);
     Timer(const Duration(seconds: 3), () {
       Navigator.pushAndRemoveUntil(
           context,

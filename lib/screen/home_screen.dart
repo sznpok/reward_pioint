@@ -58,6 +58,12 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   @override
+  void dispose() {
+    _phoneNumber.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: primaryColor.withOpacity(0.1),
@@ -120,7 +126,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             height: 12.0,
                           ),
                           Text(
-                            "Amount Spent",
+                            "Purchase Amount",
                             style: Theme.of(context).textTheme.bodyText1,
                           ),
                           const SizedBox(
@@ -128,11 +134,11 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                           GeneralTextField(
                             obscureText: false,
-                            hintText: "amount",
+                            hintText: "Purchase amount",
                             keywordType: TextInputType.number,
                             validate: (String value) {
                               if (value.isEmpty) {
-                                return "Please enter amount number";
+                                return "Please enter purchase amount";
                               }
                             },
                             onChanged: (String value) {
@@ -148,6 +154,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           const SizedBox(height: 12),
                           ElevatedButton(
                             onPressed: () {
+                              FocusScope.of(context).requestFocus(FocusNode());
                               _onSubmit();
                             },
                             child: const Text(

@@ -139,7 +139,7 @@ class _ListItemState extends State<ListItem> {
                       child: Row(
                         children: [
                           Text(
-                            "Amount Spent:",
+                            "Purhcase Amount:",
                             style: Theme.of(context).textTheme.subtitle2,
                           ),
                           const SizedBox(
@@ -161,6 +161,7 @@ class _ListItemState extends State<ListItem> {
                                   value: choice,
                                   child: InkWell(
                                     onTap: () {
+                                      Navigator.pop(context);
                                       if (choice.title == "Update") {
                                         editDialogue(
                                           i,
@@ -240,13 +241,17 @@ class _ListItemState extends State<ListItem> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        provider.getList[i].rewardPoint!,
+                        double.parse(provider.getList[i].rewardPoint!)
+                            .toStringAsFixed(2),
                         style: Theme.of(context).textTheme.headline5!.copyWith(
                               color: colorWhite,
                             ),
                       ),
+                      const SizedBox(
+                        width: 4.0,
+                      ),
                       Text(
-                        "Point",
+                        "cash rewards",
                         style: Theme.of(context).textTheme.subtitle2!.copyWith(
                               color: colorWhite,
                             ),
@@ -323,12 +328,12 @@ class _ListItemState extends State<ListItem> {
                           keyboardType: TextInputType.number,
                           validator: (value) {
                             if (value!.isEmpty) {
-                              return 'Amount  cannot be empty';
+                              return 'Purchase Amount  cannot be empty';
                             }
                             return null;
                           },
                           decoration: InputDecoration(
-                            labelText: 'Amount spent',
+                            labelText: 'Purchase amount',
                             border: InputBorder.none,
                             fillColor: Colors.grey.shade300,
                             filled: true,
@@ -346,12 +351,12 @@ class _ListItemState extends State<ListItem> {
                           focusNode: FocusNode(descendantsAreFocusable: false),
                           validator: (value) {
                             if (value!.isEmpty) {
-                              return 'Point cannot be empty';
+                              return 'Cash Rewards cannot be empty';
                             }
                             return null;
                           },
                           decoration: InputDecoration(
-                            labelText: 'Reward Point',
+                            labelText: 'Cash Rewards',
                             border: InputBorder.none,
                             fillColor: Colors.grey.shade300,
                             filled: true,
@@ -362,39 +367,54 @@ class _ListItemState extends State<ListItem> {
                         height: 8.0,
                       ),
                       SizedBox(
-                        width: MediaQuery.of(context).size.width,
                         height: 40,
-                        child: ElevatedButton(
-                          onPressed: () async {
-                            if (!_formKey.currentState!.validate()) {
-                              return;
-                            }
-                            onLoading(context);
-                            amount = _amountSpentController.text;
-                            mobileNumber = _mobileController.text;
-                            rewardPoint = _rewardController.text;
-                            Timer(const Duration(milliseconds: 1000), () {
-                              provider.updateItem(
-                                index,
-                                Todo(
-                                  amount: amount,
-                                  phonNumber: mobileNumber,
-                                  rewardPoint: rewardPoint,
-                                ),
-                              );
-                              log(amount);
-                              log(mobileNumber);
-                              log(rewardPoint);
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            ElevatedButton(
+                              onPressed: () async {
+                                FocusScope.of(context)
+                                    .requestFocus(FocusNode());
+                                if (!_formKey.currentState!.validate()) {
+                                  return;
+                                }
+                                onLoading(context);
+                                amount = _amountSpentController.text;
+                                mobileNumber = _mobileController.text;
+                                rewardPoint = _rewardController.text;
+                                Timer(const Duration(milliseconds: 1000), () {
+                                  provider.updateItem(
+                                    index,
+                                    Todo(
+                                      amount: amount,
+                                      phonNumber: mobileNumber,
+                                      rewardPoint: rewardPoint,
+                                    ),
+                                  );
+                                  log(amount);
+                                  log(mobileNumber);
+                                  log(rewardPoint);
 
-                              Navigator.pop(context);
-                              _amountSpentController.clear();
-                              _mobileController.clear();
-                              _rewardController.clear();
-                              provider.getItem();
-                              Navigator.pop(context);
-                            });
-                          },
-                          child: const Text('Update'),
+                                  Navigator.pop(context);
+                                  _amountSpentController.clear();
+                                  _mobileController.clear();
+                                  _rewardController.clear();
+                                  provider.getItem();
+                                  Navigator.pop(context);
+                                });
+                              },
+                              child: const Text('Update'),
+                            ),
+                            ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                primary: Colors.red,
+                              ),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                              child: const Text('Cancel'),
+                            ),
+                          ],
                         ),
                       ),
                       const SizedBox(

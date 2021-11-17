@@ -64,7 +64,7 @@ class RewardScreen extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              "Total Amount Spent:",
+                              "Total Purchase Amount:",
                               style: Theme.of(context).textTheme.bodyText1,
                             ),
                             Text(
@@ -81,11 +81,11 @@ class RewardScreen extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              "Total Reward Point:",
+                              "Total Cash Reward:",
                               style: Theme.of(context).textTheme.bodyText1,
                             ),
                             Text(
-                              rewardPoint,
+                              double.parse(rewardPoint).toStringAsFixed(2),
                               style: Theme.of(context).textTheme.subtitle1,
                             ),
                           ],

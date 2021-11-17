@@ -42,7 +42,7 @@ class _NavigationScreenState extends State<NavigationScreen> {
             icon: Icon(
               CupertinoIcons.heart,
             ),
-            label: "Saved",
+            label: "Records",
           ),
         ],
       ),
